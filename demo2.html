@@ -1,0 +1,94 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>标题</title>
+	</head>
+	<body>
+     <script>
+    let one = new Money(120);
+    let two = new Money(51);
+    let three = Money.add(one,two)
+    let four = one.add(two)
+    let five = new Money(one + two);
+    console.log(`${three},${four},${five}`)  
+    //  要求打印三个1元7角1分
+
+    class Money {
+    constructor (num) {
+        this.num=num
+    }
+    static add (num1,num2) {
+        let con=num1.num+num2.num
+        let j=con.toString().split("")
+        return parseInt(con/100)+'元'+j[1]+'分'+j[2]+'角'
+    }
+    add (num) { 
+        let con= this.num+num.num
+        let j=con.toString().split("")
+        return parseInt(con/100)+'元'+j[1]+'分'+j[2]+'角'
+    }
+    valueOf () {
+        return this.num
+    }
+    toString () {
+        let con= this.num
+        let j=con.toString().split("")
+        return parseInt(con/100)+'元'+j[1]+'分'+j[2]+'角'
+        }
+    }
+
+
+    // -------------------------------------------------------------------------
+
+        //     1
+        //    1 1
+        //   1 2 1
+        //  1 3 3 1
+        // 1 4 6 4 1    //  要求打印数字倒三角
+
+    function getnum(num){
+    let start = 1;
+    let list = [[1]]
+    for(var i=0;i<num-1;i++){
+        let newarr = []
+        for(var o=0;o<list[i].length+1;o++){
+            let startnum = list[i][o-1]?list[i][o-1]:0
+            let lastnum = 0
+            if(list[i][o] && o<num){
+                lastnum = list[i][o]
+            }else{
+                lastnum = 0
+            }
+            let con = startnum+lastnum
+            newarr.push(con)
+        }
+        list.push(newarr)
+    }
+    console.log(list)
+    }
+    getnum(3)  
+
+    
+    //  -------------------------------------------------------------------
+
+    //有10个台阶，青蛙一次跳一个或者一次跳两个，把所有可能性==》以数组形式打映出来
+
+    function jump (num=0,arr=[]) {
+        let i = 1;
+        while(i<3){
+            if(num+i<=10){
+                let _arr = [...arr]
+                _arr.push(i)
+                if(num+i===10){
+                    console.log(_arr)
+                }else{
+                    jump(num+i,_arr)
+                }
+            }
+            i++
+        }
+    }
+    jump()
+     </script>
+	</body>
+</html>

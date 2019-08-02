@@ -1,0 +1,64 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>标题</title>
+	</head>
+	<body>
+     <script>
+     // 以下执行顺序
+        async function async1() {
+        console.log("async1 start");   // 2
+        await async2();                      // await让出线程 （await后面的函数会先执行一遍，然后就会跳出整个async函数来执行后面js栈的代码。）
+        console.log("async1 end");     // 6
+      }
+      async function async2() {
+        console.log("async2");        // 3
+      }
+      console.log("script start");    // 先执行 1
+      setTimeout(function() {
+        console.log("setTimeout");    // 8
+      }, 0);
+      async1();
+      new Promise(function(resolve) {
+        console.log("promise1");     // 4   Promise构造函数是同步的
+        resolve();
+      }).then(function() {
+        console.log("promise2");     // 7  then是异步的
+      });
+      console.log("script end");     // 5
+
+
+
+
+      //  已知如下数组：编写一个程序将数组扁平化去并除其中重复部分数据，最终得到一个升序且不重复的数组
+      var arr = [[1, 2, 2],[3, 4, 5, 5],[6, 7, 8, 9, [11, 12, [12, 13, [14]]]],10];
+      let newarr = [];
+      let tonewarr = [];
+
+      function checkarr(newarr) {   // 升序且不重复
+        toarr(arr);
+        if (newarr.length < 1) {
+          return;
+        }
+        newarr.forEach((ite, i) => {
+          if (newarr.indexOf(newarr[i]) == i) {
+            tonewarr.push(newarr[i]);
+          }
+        });
+      }
+
+      function toarr(arr) {   // 数组扁平化
+        arr.forEach(item => {
+          if (item instanceof Array) {
+            toarr(item);
+          } else {
+            newarr.push(item);
+          }
+        });
+      }
+
+      checkarr(newarr);
+      console.log(tonewarr);  // 得到一个新数组
+     </script>
+	</body>
+</html>
